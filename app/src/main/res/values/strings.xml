@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ShoppingList</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_shopping_item_title">Add an item to your shopping list.</string>
+    <string name="tv_add_item_name">Item Name</string>
+    <string name="switch_add_item_loc">Add to finished list?</string>
+</resources>
