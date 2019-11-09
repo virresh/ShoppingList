@@ -6,7 +6,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "shoppingItems")
-public class ShoppingItem {
+public class ShoppingItem  implements Cloneable{
 
     @PrimaryKey(autoGenerate = true)
     private long id;
@@ -17,12 +17,24 @@ public class ShoppingItem {
     private String unit;
     private boolean done;
 
+    @Override
+    public ShoppingItem clone(){
+        ShoppingItem n = new ShoppingItem();
+        n.setItemName(this.itemName);
+        n.setItemDescription(this.itemDescription);
+        n.setId(this.id);
+        n.setAmount(this.amount);
+        n.setDone(this.done);
+        n.setUnit(this.unit);
+        return n;
+    }
+
     public ShoppingItem(){
 
     }
 
-    public ShoppingItem(long id, String itemName, String itemDescription, float amount, String unit, boolean done) {
-        this.id = id;
+    public ShoppingItem(String itemName, String itemDescription, float amount, String unit, boolean done) {
+        this.id = 0;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.amount = amount;

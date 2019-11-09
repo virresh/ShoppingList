@@ -6,4 +6,9 @@
     <string name="add_shopping_item_title">Add an item to your shopping list.</string>
     <string name="tv_add_item_name">Item Name</string>
     <string name="switch_add_item_loc">Add to finished list?</string>
+    <string name="item_description">Item Description</string>
+    <string name="description">Description</string>
+    <string name="item_amount">Item Amount</string>
+    <string name="unit">Unit</string>
+    <string name="add_to_my_list">Add to my list!</string>
 </resources>

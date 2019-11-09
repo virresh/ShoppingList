@@ -1,6 +1,7 @@
 package com.example.shoppinglist.Fragments;
 
-import android.content.Intent;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,12 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shoppinglist.Adapters.RecyclerShoppingAdapter;
-import com.example.shoppinglist.AddShoppingItem;
 import com.example.shoppinglist.Item.ShoppingItem;
 import com.example.shoppinglist.R;
 import com.example.shoppinglist.dbutils.AppDatabase;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -28,6 +26,30 @@ public class RecyclerFragment extends Fragment {
     private RecyclerView.Adapter mtodolist;
     private RecyclerView.LayoutManager layoutManager;
     private List<ShoppingItem> data;
+
+    private class dataTask extends AsyncTask<Object, Void, List<ShoppingItem> >{
+
+        @Override
+        protected void onPostExecute(List<ShoppingItem> shoppingItems) {
+            super.onPostExecute(shoppingItems);
+            data = shoppingItems;
+            Log.d("RECYCLER FRAGMENT", ""+data.size() + " " + getArguments().getInt("TAB_NUM"));
+            mtodolist = new RecyclerShoppingAdapter(data, getActivity());
+            todolist.setAdapter(mtodolist);
+        }
+
+        @Override
+        protected List<ShoppingItem> doInBackground(Object... objects) {
+            Context ctx = (Context) objects[0];
+            int tabnum = (int) objects[1];
+            List<ShoppingItem> items = null;
+            switch (tabnum){
+                case 1: items = AppDatabase.getInstance(ctx).shoppingItemDAO().getCurrentItems(); break;
+                case 2: items = AppDatabase.getInstance(ctx).shoppingItemDAO().getDoneItems(); break;
+            }
+            return items;
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -42,15 +64,15 @@ public class RecyclerFragment extends Fragment {
 
         layoutManager = new LinearLayoutManager(view.getContext());
         todolist.setLayoutManager(layoutManager);
-
-        int tabnum = savedInstanceState.getInt("TAB_NUM");
-        switch (tabnum){
-            case 1: data = AppDatabase.getInstance(getContext()).shoppingItemDAO().getCurrentItems(); break;
-            case 2: data = AppDatabase.getInstance(getContext()).shoppingItemDAO().getDoneItems(); break;
+        if(getArguments() != null) {
+            Log.d("RECYCLER FRAGMENT", "I'm here");
+            int tabnum = getArguments().getInt("TAB_NUM");
+            AsyncTask inittask = new dataTask();
+            inittask.execute(getContext(), tabnum);
         }
-
-        mtodolist = new RecyclerShoppingAdapter(data);
-        todolist.setAdapter(mtodolist);
+        else{
+            Log.d("RECYCLER FRAGMENT", "No arguments recieved!");
+        }
     }
 
 }

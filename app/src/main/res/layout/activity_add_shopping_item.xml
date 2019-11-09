@@ -34,7 +34,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="Name" />
 
     </LinearLayout>
 
@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Item Description" />
+            android:text="@string/item_description" />
 
         <EditText
             android:id="@+id/itemDesc"
@@ -57,7 +57,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textLongMessage"
-            android:text="Description" />
+            android:hint="@string/description" />
 
     </LinearLayout>
 
@@ -71,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Item Amount" />
+            android:text="@string/item_amount" />
 
         <EditText
             android:id="@+id/itemAmt"
@@ -79,8 +79,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="number"
-            android:text="1" />
+            android:inputType="number|numberDecimal"
+            android:hint="1.5" />
 
     </LinearLayout>
 
@@ -94,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Unit" />
+            android:text="@string/unit" />
 
         <EditText
             android:id="@+id/itemUnit"
@@ -103,7 +103,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="text"
-            android:text="kg" />
+            android:hint="kg" />
 
     </LinearLayout>
 
@@ -132,7 +132,7 @@
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add to my list!" />
+            android:text="@string/add_to_my_list" />
     </LinearLayout>
 
 </LinearLayout>

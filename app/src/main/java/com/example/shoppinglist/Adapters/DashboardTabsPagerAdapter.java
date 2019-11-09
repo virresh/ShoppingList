@@ -2,6 +2,7 @@ package com.example.shoppinglist.Adapters;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -10,15 +11,14 @@ import com.example.shoppinglist.Fragments.RecyclerFragment;
 
 public class DashboardTabsPagerAdapter extends FragmentStatePagerAdapter {
 
-    private Fragment tab1;
-    private Fragment tab2;
+    private RecyclerFragment tab1;
+    private RecyclerFragment tab2;
 
     public DashboardTabsPagerAdapter(FragmentManager fm) {
         super(fm);
-
+        tab1 = new RecyclerFragment();
         Bundle args1 = new Bundle();
         args1.putInt("TAB_NUM", 1);
-        tab1 = new RecyclerFragment();
         tab1.setArguments(args1);
 
         Bundle args2 = new Bundle();
@@ -40,6 +40,7 @@ public class DashboardTabsPagerAdapter extends FragmentStatePagerAdapter {
             case 1: return tab2;
         }
         return null;
+//        return fragmentList.get(position);
     }
 
     @Override
@@ -48,8 +49,13 @@ public class DashboardTabsPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
+    public int getItemPosition(@NonNull Object object){
+        return POSITION_NONE;
+    }
+
+    @Override
     public CharSequence getPageTitle(int position) {
-        String title = null;
+        String title = "Title";
         switch (position) {
             case 0: title="Current List"; break;
             case 1: title="Completed List"; break;

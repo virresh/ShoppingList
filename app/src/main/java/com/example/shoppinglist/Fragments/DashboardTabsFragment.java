@@ -12,8 +12,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.shoppinglist.Adapters.DashboardTabsPagerAdapter;
 import com.example.shoppinglist.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
 public class DashboardTabsFragment extends Fragment {
@@ -35,5 +33,9 @@ public class DashboardTabsFragment extends Fragment {
         viewPager.setAdapter(dashboardPageAdapter);
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    public void dataUpdated(){
+        dashboardPageAdapter.notifyDataSetChanged();
     }
 }
