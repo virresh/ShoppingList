@@ -108,7 +108,7 @@ public class ShoppingItem  implements Cloneable{
             item.setDone(values.getAsBoolean("done"));
         }
         if (values.containsKey("id")) {
-            item.setId(values.getAsInteger("itemName"));
+            item.setId(values.getAsInteger("id"));
         }
         return item;
     }
