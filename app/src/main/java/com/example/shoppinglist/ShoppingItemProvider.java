@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 import com.example.shoppinglist.Item.ShoppingItem;
 import com.example.shoppinglist.dbutils.AppDatabase;
 
+// Reference: https://openclassrooms.com/en/courses/4561586-manage-your-data-to-have-a-100-offline-android-app/5770976-expose-your-data-with-a-contentprovider
+
 public class ShoppingItemProvider extends ContentProvider {
 
     public static final String AUTHORITY = "com.example.shoppinglist.items";
@@ -22,20 +24,8 @@ public class ShoppingItemProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
-        if (getContext() != null){
-            final int count = AppDatabase.getInstance(getContext()).shoppingItemDAO().deleteItem(ContentUris.parseId(uri));
-            getContext().getContentResolver().notifyChange(uri, null);
-            return count;
-        }
-        throw new IllegalArgumentException("Failed to delete row into " + uri);
-    }
-
-
-    @Nullable
-    @Override
-    public String getType(@NonNull Uri uri) {
-        return "vnd.android.cursor.item/" + AUTHORITY + "." + TABLE_NAME;
+    public boolean onCreate() {
+        return true;
     }
 
     @Override
@@ -53,21 +43,13 @@ public class ShoppingItemProvider extends ContentProvider {
     }
 
     @Override
-    public boolean onCreate() {
-        return true;
-    }
-
-    @Override
-    public Cursor query(Uri uri, String[] projection, String selection,
-                        String[] selectionArgs, String sortOrder) {
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
         if (getContext() != null){
-            long itemId = ContentUris.parseId(uri);
-            final Cursor cursor = AppDatabase.getInstance(getContext()).shoppingItemDAO().getItem(itemId);
-            cursor.setNotificationUri(getContext().getContentResolver(), uri);
-            return cursor;
+            final int count = AppDatabase.getInstance(getContext()).shoppingItemDAO().deleteItem(ContentUris.parseId(uri));
+            getContext().getContentResolver().notifyChange(uri, null);
+            return count;
         }
-
-        throw new IllegalArgumentException("Failed to query row for uri " + uri);
+        throw new IllegalArgumentException("Failed to delete row into " + uri);
     }
 
     @Override
@@ -82,4 +64,22 @@ public class ShoppingItemProvider extends ContentProvider {
     }
 
 
+    @Nullable
+    @Override
+    public String getType(@NonNull Uri uri) {
+        return "vnd.android.cursor.item/" + AUTHORITY + "." + TABLE_NAME;
+    }
+
+    @Override
+    public Cursor query(Uri uri, String[] projection, String selection,
+                        String[] selectionArgs, String sortOrder) {
+        if (getContext() != null){
+            long itemId = ContentUris.parseId(uri);
+            final Cursor cursor = AppDatabase.getInstance(getContext()).shoppingItemDAO().getItem(itemId);
+            cursor.setNotificationUri(getContext().getContentResolver(), uri);
+            return cursor;
+        }
+
+        throw new IllegalArgumentException("Failed to query row for uri " + uri);
+    }
 }
